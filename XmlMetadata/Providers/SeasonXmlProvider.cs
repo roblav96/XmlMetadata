@@ -10,28 +10,28 @@ using XmlMetadata.Parsers;
 namespace XmlMetadata.Providers
 {
     /// <summary>
-    /// Class SeriesProviderFromXml
+    /// Class SeasonProviderFromXml
     /// </summary>
-    public class SeriesXmlProvider : BaseXmlProvider<Series>, IHasOrder
+    public class SeasonXmlProvider : BaseXmlProvider<Season>, IHasOrder
     {
         private readonly IProviderManager _providerManager;
 
 
-        public SeriesXmlProvider(IFileSystem fileSystem, ILogger logger, IProviderManager providerManager)
+        public SeasonXmlProvider(IFileSystem fileSystem, ILogger logger, IProviderManager providerManager)
             : base(fileSystem, logger)
         {
             _providerManager = providerManager;
 
         }
 
-        protected override void Fetch(MetadataResult<Series> result, string path, CancellationToken cancellationToken)
+        protected override void Fetch(MetadataResult<Season> result, string path, CancellationToken cancellationToken)
         {
-            new SeriesXmlParser(Logger, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
+            new SeasonXmlParser(Logger, _providerManager, FileSystem).Fetch(result, path, cancellationToken);
         }
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
         {
-            return directoryService.GetFile(Path.Combine(info.Path, "series.xml"));
+            return directoryService.GetFile(Path.Combine(info.Path, "season.xml"));
         }
 
         public override int Order

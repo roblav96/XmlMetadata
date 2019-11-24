@@ -31,7 +31,7 @@ namespace XmlMetadata.Parsers
 
         private Dictionary<string, string> _validProviderIds;
 
-        
+
         protected IFileSystem FileSystem { get; private set; }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace XmlMetadata.Parsers
         {
             Logger = logger;
             ProviderManager = providerManager;
-            
+
             FileSystem = fileSystem;
         }
 
@@ -667,6 +667,43 @@ namespace XmlMetadata.Parsers
                             {
                                 video.Video3DFormat = Video3DFormat.MVC;
                             }
+                        }
+                        break;
+                    }
+
+                case "Primary":
+                    {
+                        var path = reader.ReadElementContentAsString();
+                        if (!string.IsNullOrWhiteSpace(path))
+                        {
+                            item.SetImage(new ItemImageInfo {
+                                Path = path,
+                                Type = ImageType.Primary
+                            }, 0);
+                        }
+                        break;
+                    }
+                case "Backdrop":
+                    {
+                        var path = reader.ReadElementContentAsString();
+                        if (!string.IsNullOrWhiteSpace(path))
+                        {
+                            item.SetImage(new ItemImageInfo {
+                                Path = path,
+                                Type = ImageType.Backdrop
+                            }, 0);
+                        }
+                        break;
+                    }
+                case "Thumb":
+                    {
+                        var path = reader.ReadElementContentAsString();
+                        if (!string.IsNullOrWhiteSpace(path))
+                        {
+                            item.SetImage(new ItemImageInfo {
+                                Path = path,
+                                Type = ImageType.Thumb
+                            }, 0);
                         }
                         break;
                     }
