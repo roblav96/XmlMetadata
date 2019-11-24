@@ -12,13 +12,13 @@ namespace XmlMetadata.Providers
     public class MovieXmlProvider : BaseXmlProvider<Movie>
     {
         private readonly IProviderManager _providerManager;
-        
+
 
         public MovieXmlProvider(IFileSystem fileSystem, ILogger logger, IProviderManager providerManager)
             : base(fileSystem, logger)
         {
             _providerManager = providerManager;
-            
+
         }
 
         protected override void Fetch(MetadataResult<Movie> result, string path, CancellationToken cancellationToken)
@@ -28,7 +28,8 @@ namespace XmlMetadata.Providers
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
         {
-            return GetXmlFileInfo(info, FileSystem);
+            return directoryService.GetFile(Path.ChangeExtension(info.Path, ".xml"));
+            // return GetXmlFileInfo(info, FileSystem);
         }
 
         public static FileSystemMetadata GetXmlFileInfo(ItemInfo info, IFileSystem fileSystem)
@@ -53,6 +54,9 @@ namespace XmlMetadata.Providers
             var movieFile = fileSystem.GetFileInfo(Path.Combine(directoryPath, "movie.xml"));
 
             return movieFile.Exists ? movieFile : file;
+
+            // var file = Path.Combine(directoryPath, fileSystem.GetFileNameWithoutExtension(info.Path) + ".xml")
+            // return directoryService.GetFile(Path.ChangeExtension(info.Path, ".xml"));
         }
     }
 }

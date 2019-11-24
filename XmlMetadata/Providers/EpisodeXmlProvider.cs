@@ -14,13 +14,13 @@ namespace XmlMetadata.Providers
     public class EpisodeXmlProvider : BaseXmlProvider<Episode>
     {
         private readonly IProviderManager _providerManager;
-        
+
 
         public EpisodeXmlProvider(IFileSystem fileSystem, ILogger logger, IProviderManager providerManager)
             : base(fileSystem, logger)
         {
             _providerManager = providerManager;
-            
+
         }
 
         protected override void Fetch(MetadataResult<Episode> result, string path, CancellationToken cancellationToken)
@@ -35,12 +35,14 @@ namespace XmlMetadata.Providers
 
         protected override FileSystemMetadata GetXmlFile(ItemInfo info, IDirectoryService directoryService)
         {
-            var metadataPath = FileSystem.GetDirectoryName(info.Path);
-            metadataPath = Path.Combine(metadataPath, "metadata");
+            // var metadataPath = FileSystem.GetDirectoryName(info.Path);
+            // metadataPath = Path.Combine(metadataPath, "metadata");
 
-            var metadataFile = Path.Combine(metadataPath, Path.ChangeExtension(Path.GetFileName(info.Path), ".xml"));
+            // var metadataFile = Path.Combine(metadataPath, Path.ChangeExtension(Path.GetFileName(info.Path), ".xml"));
 
-            return directoryService.GetFile(metadataFile);
+            // return directoryService.GetFile(metadataFile);
+
+            return directoryService.GetFile(Path.ChangeExtension(info.Path, ".xml"));
         }
     }
 }
